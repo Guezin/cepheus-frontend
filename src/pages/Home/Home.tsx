@@ -14,7 +14,7 @@ import {
   LatestLaunch,
 } from './styles';
 
-type LaunchesData = {
+type LatestLaunchData = {
   mission: string;
   success: boolean;
   failures: Array<{
@@ -30,10 +30,25 @@ type LaunchesData = {
   };
 }
 
+type NextLaunchData = {
+  mission: string;
+  details: string | null;
+  date_utc: string;
+  date_local: string;
+  rocket: {
+    name: string;
+    cost_per_launch: number;
+    description: string;
+  };
+}
+
 const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [latestLaunch, setLatestLaunch] = useState<LaunchesData>(
-    {} as LaunchesData
+  const [latestLaunch, setLatestLaunch] = useState<LatestLaunchData>(
+    {} as LatestLaunchData
+  );
+  const [nextLaunch, setNextLaunch] = useState<NextLaunchData>(
+    {} as NextLaunchData
   );
 
   const navigation = useNavigate();
@@ -42,9 +57,11 @@ const Home = () => {
     setLoading(true);
 
     const loadLatestLauncheData = async () => {
-      const { data } = await api.get<LaunchesData>('/v1/latest/launch');
+      const { data: latestLaunchData } = await api.get<LatestLaunchData>('/v1/latest/launch');
+      const { data: nextLaunchData } = await api.get<NextLaunchData>('/v1/next/launch');
 
-      setLatestLaunch(data);
+      setLatestLaunch(latestLaunchData);
+      setNextLaunch(nextLaunchData);
 
       setLoading(false);
     };
@@ -52,8 +69,8 @@ const Home = () => {
     loadLatestLauncheData();
   }, []);
 
-  const handleNavigation = () => {
-    navigation('/launches/latest', { state: latestLaunch });
+  const navigationTo = (path: string, stateData: LatestLaunchData | NextLaunchData) => {
+    navigation(path, { state: stateData });
   };
 
   return (
@@ -76,31 +93,29 @@ const Home = () => {
             <section>
               <Title>Lançamentos</Title>
 
-              <LatestLaunch onClick={handleNavigation}>
+              <LatestLaunch onClick={() => navigationTo('/launches/latest', latestLaunch)}>
                 <header>
                   <h2>Último</h2>
                   <span>Missão: {latestLaunch.mission}</span>
                 </header>
               </LatestLaunch>
 
-              <Launches to="/launches/next">
+              <Launches onClick={() => navigationTo('/launches/next', nextLaunch)}>
                 <header>
                   <h2>Próximo</h2>
-                  <span>lançamento</span>
+                  <span>Missão: {nextLaunch.mission}</span>
                 </header>
               </Launches>
 
-              <Launches to="/launches/upcoming">
-                <header>
-                  <h2>Próximos</h2>
-                  <span>lançamentos</span>
-                </header>
-              </Launches>
-
-              <Launches to="/launches/past">
+              <Launches>
                 <header>
                   <h2>Passados</h2>
-                  <span>lançamentos</span>
+                </header>
+              </Launches>
+
+              <Launches>
+                <header>
+                  <h2>Próximos</h2>
                 </header>
               </Launches>
             </section>

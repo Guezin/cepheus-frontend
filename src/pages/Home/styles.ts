@@ -48,10 +48,11 @@ export const Title = styled.h1`
   color: ${colors.grey[100]};
 `;
 
-export const Launches = styled(Link)`
+export const Launches = styled.div`
   background: ${colors.shapePrimary};
   padding: 2.4rem;
   border-radius: 5px;
+  cursor: pointer;
 
   header {
     display: flex;
@@ -68,6 +69,7 @@ export const LatestLaunch = styled.div`
   padding: 2.4rem;
   background: ${colors.shapePrimary};
   border-radius: 5px;
+  cursor: pointer;
 
   header {
     display: flex;
