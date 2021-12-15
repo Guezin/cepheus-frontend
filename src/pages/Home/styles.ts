@@ -63,7 +63,7 @@ export const Launches = styled(Link)`
   }
 `;
 
-export const LatestLaunch = styled(Link)`
+export const LatestLaunch = styled.div`
   margin-bottom: 1.8rem;
   padding: 2.4rem;
   background: ${colors.shapePrimary};

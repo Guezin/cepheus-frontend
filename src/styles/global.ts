@@ -24,27 +24,29 @@ export default createGlobalStyle`
 
   body {
     background: ${colors.background};
-    list-style-type: none;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4 , h5, h6, strong {
     font-weight: 500;
+    color: ${colors.grey[100]};
   }
 
   h1 {
     font-size: 3.6rem;
-    color: ${colors.grey[100]};
   }
 
   h2 {
     font-size: 2.4rem;
-    color: ${colors.grey[100]};
   }
 
-  span {
+  p, span {
     font-size: 1.6rem;
     color: ${colors.textInPrimary};
+  }
+
+  li {
+    list-style-type: none;
   }
 
   button {
