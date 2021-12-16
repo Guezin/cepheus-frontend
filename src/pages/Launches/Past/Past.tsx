@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import api from '../../../service/api';
 import formatDateUTC from '../../../utils/formatDateUTC';
+import formatNumberToBRL from '../../../utils/formatNumberToBRL';
 
 import PlanetGlobalSVG from '../../../assets/planet-earth-global.svg';
 
@@ -40,8 +41,6 @@ const Past = () => {
     loadPastLaunchesData();
   }, []);
 
-  const formatCostPerLaunch = useCallback((value: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value), []);
-
   const pastMissions = useMemo(() => (
     pastLaunches.map(({ mission, success, details, date_utc, rocket }) => (
       <div key={mission}>
@@ -61,7 +60,7 @@ const Past = () => {
             <MissionDetails>
               <ul>
                 <li>Data do lançamento: {formatDateUTC(date_utc)}</li>
-                <li>Custo por lançamento: {formatCostPerLaunch(rocket.cost_per_launch)}</li>
+                <li>Custo por lançamento: {formatNumberToBRL(rocket.cost_per_launch)}</li>
                 <li>{!success ? 'A missão falhou!' : 'Missão cumprida!'}</li>
               </ul>
 
