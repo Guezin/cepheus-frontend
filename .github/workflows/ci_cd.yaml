@@ -31,4 +31,6 @@ jobs:
         run: yarn run build
 
       - name: Running Deploy
-        run: yarn run deploy
+        run: |
+          yarn run deploy
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_ID }} --paths "/*"
