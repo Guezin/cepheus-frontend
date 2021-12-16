@@ -17,16 +17,13 @@ import {
 type LatestLaunchData = {
   mission: string;
   success: boolean;
-  failures: Array<{
-    reason?: string;
-  }>;
   details: string | null;
   date_utc: string;
   date_local: string;
   rocket: {
     name: string;
     cost_per_launch: number;
-    description: string;
+    description: string | null;
   };
 }
 
@@ -38,7 +35,7 @@ type NextLaunchData = {
   rocket: {
     name: string;
     cost_per_launch: number;
-    description: string;
+    description: string | null;
   };
 }
 
@@ -56,7 +53,7 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
 
-    const loadLatestLauncheData = async () => {
+    const loadLaunchesData = async () => {
       const { data: latestLaunchData } = await api.get<LatestLaunchData>('/v1/latest/launch');
       const { data: nextLaunchData } = await api.get<NextLaunchData>('/v1/next/launch');
 
@@ -66,10 +63,10 @@ const Home = () => {
       setLoading(false);
     };
 
-    loadLatestLauncheData();
+    loadLaunchesData();
   }, []);
 
-  const navigationTo = (path: string, stateData: LatestLaunchData | NextLaunchData) => {
+  const navigationTo = (path: string, stateData?: LatestLaunchData | NextLaunchData) => {
     navigation(path, { state: stateData });
   };
 
@@ -107,13 +104,13 @@ const Home = () => {
                 </header>
               </Launches>
 
-              <Launches>
+              <Launches onClick={() => navigationTo('/launches/past')}>
                 <header>
                   <h2>Passados</h2>
                 </header>
               </Launches>
 
-              <Launches>
+              <Launches onClick={() => navigationTo('/launches/upcoming')}>
                 <header>
                   <h2>Próximos</h2>
                 </header>
