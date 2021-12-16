@@ -12,17 +12,6 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const GoBack = styled.nav`
-  margin-right: auto;
-  font-size: 1.6rem;
-  display: flex;
-
-  a {
-    padding-left: 0.9rem;
-    color: ${colors.textInPrimary};
-  }
-`;
-
 export const Content = styled.div`
   margin-top: 5.2rem;
   width: 100%;

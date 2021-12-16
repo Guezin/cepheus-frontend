@@ -1,15 +1,14 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/md';
 
 import api from '../../../service/api';
+import formatDateUTC from '../../../utils/formatDateUTC';
 
 import PlanetGlobalSVG from '../../../assets/planet-earth-global.svg';
 
 import Loading from '../../../components/Loading';
+import { GoBack } from '../../../components/GoBack';
 
-import colors from '../../../styles/colors';
-import { Container, GoBack, Content, Rocket, MissionDetails } from './styles';
+import { Container, Content, Rocket, MissionDetails } from './styles';
 
 type PastLaunchesData = {
   mission: string;
@@ -41,15 +40,6 @@ const Past = () => {
     loadPastLaunchesData();
   }, []);
 
-  const formatDate = useCallback((dateUTC: string) => {
-    const date = dateUTC.split('T')[0].split('-');
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
-
-    return `${day}/${month}/${year}`;
-  }, []);
-
   const formatCostPerLaunch = useCallback((value: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value), []);
 
   const pastMissions = useMemo(() => (
@@ -70,7 +60,7 @@ const Past = () => {
 
             <MissionDetails>
               <ul>
-                <li>Data do lançamento: {formatDate(date_utc)}</li>
+                <li>Data do lançamento: {formatDateUTC(date_utc)}</li>
                 <li>Custo por lançamento: {formatCostPerLaunch(rocket.cost_per_launch)}</li>
                 <li>{!success ? 'A missão falhou!' : 'Missão cumprida!'}</li>
               </ul>
@@ -86,11 +76,7 @@ const Past = () => {
     <>
       {loading ? (<Loading />) : (
         <Container>
-          <GoBack>
-            <MdArrowBack color={colors.textInPrimary} size={20} />
-
-            <Link to="/">Voltar para Home</Link>
-          </GoBack>
+          <GoBack to="/" title="Voltar para Home" />
 
           <Content>
             {pastMissions}

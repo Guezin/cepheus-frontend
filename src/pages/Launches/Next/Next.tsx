@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/md';
+import { useLocation } from 'react-router-dom';
+
+import formatDateUTC from '../../../utils/formatDateUTC';
 
 import RocketSVG from '../../../assets/space-rocket.svg';
 
-import colors from '../../../styles/colors';
-import { Container, GoBack, Content, Rocket, MissionDetails } from './styles';
+import { GoBack } from '../../../components/GoBack';
+
+import { Container, Content, Rocket, MissionDetails } from './styles';
 
 type LocationState = {
   mission: string;
@@ -28,22 +30,11 @@ const Next = () => {
 
   const missionDetails = useMemo(() => (!details ? '' : <li>{details}</li>), []);
 
-  const formattedDate = useMemo(() => {
-    const date = date_utc.split('T')[0].split('-');
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
-
-    return `${day}/${month}/${year}`;
-  }, [date_utc]);
+  const formattedDate = useMemo(() => formatDateUTC(date_utc), [date_utc]);
 
   return (
     <Container>
-      <GoBack>
-        <MdArrowBack color={colors.textInPrimary} size={20} />
-
-        <Link to="/">Voltar para Home</Link>
-      </GoBack>
+      <GoBack to="/" title="Voltar para Home" />
 
       <Content>
         <Rocket>

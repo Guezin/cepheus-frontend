@@ -1,18 +1,17 @@
 import { useMemo } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/md';
+import { useLocation } from 'react-router-dom';
+
+import formatDateUTC from '../../../utils/formatDateUTC';
 
 import RocketSVG from '../../../assets/space-rocket.svg';
 
-import colors from '../../../styles/colors';
-import { Container, GoBack, Content, Rocket, MissionDetails } from './styles';
+import { GoBack } from '../../../components/GoBack';
+
+import { Container, Content, Rocket, MissionDetails } from './styles';
 
 type LocationState = {
   mission: string;
   success: boolean;
-  failures: Array<{
-    reason?: string;
-  }>;
   details: string | null;
   date_utc: string;
   rocket: {
@@ -27,18 +26,18 @@ const Latest = () => {
     mission,
     rocket,
     details,
-    failures,
     date_utc,
     success: missionAccomplished,
   } = useLocation().state as LocationState;
 
   const missionFailed = useMemo(() => {
+    const checkDetailsExists = () => (!details ? '' : <li>{details}</li>);
+
     if (!missionAccomplished) {
       return (
         <>
           <li>A missão falhou!</li>
-          <li>{failures.map(failure => failure.reason)}</li>
-          {(!details ? '' : <li>{details}</li>)}
+          {checkDetailsExists()}
         </>
       );
     }
@@ -46,27 +45,16 @@ const Latest = () => {
     return (
       <>
         <li>Missão cumprida!</li>
-        {(!details ? '' : <li>{details}</li>)}
+        {checkDetailsExists()}
       </>
     );
-  }, [missionAccomplished, details, failures]);
+  }, [missionAccomplished, details]);
 
-  const formattedDate = useMemo(() => {
-    const date = date_utc.split('T')[0].split('-');
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
-
-    return `${day}/${month}/${year}`;
-  }, [date_utc]);
+  const formattedDate = useMemo(() => formatDateUTC(date_utc), [date_utc]);
 
   return (
     <Container>
-      <GoBack>
-        <MdArrowBack color={colors.textInPrimary} size={20} />
-
-        <Link to="/">Voltar para Home</Link>
-      </GoBack>
+      <GoBack to="/" title="Voltar para Home" />
 
       <Content>
         <Rocket>

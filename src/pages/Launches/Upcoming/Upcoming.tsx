@@ -1,15 +1,14 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/md';
+import { useState, useEffect, useMemo } from 'react';
 
 import api from '../../../service/api';
+import formatDateUTC from '../../../utils/formatDateUTC';
 
 import PlanetSaturnSVG from '../../../assets/planet-saturn.svg';
 
 import Loading from '../../../components/Loading';
+import { GoBack } from '../../../components/GoBack';
 
-import colors from '../../../styles/colors';
-import { Container, GoBack, Content, Rocket } from './styles';
+import { Container, Content, Rocket } from './styles';
 
 type UpcomingLaunchesData = {
   mission: string;
@@ -35,15 +34,6 @@ const Upcoming = () => {
     loadPastLaunchesData();
   }, []);
 
-  const formatDate = useCallback((dateUTC: string) => {
-    const date = dateUTC.split('T')[0].split('-');
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
-
-    return `${day}/${month}/${year}`;
-  }, []);
-
   const upcomingMissions = useMemo(() => (
     upcomingLaunches.map(({ mission, date_utc }) => (
       <Rocket key={mission}>
@@ -53,7 +43,7 @@ const Upcoming = () => {
 
         <article>
           <p>Missão: <strong>{mission}</strong></p>
-          <span>Data do lançamento: {formatDate(date_utc)}</span>
+          <span>Data do lançamento: {formatDateUTC(date_utc)}</span>
         </article>
       </Rocket>
     ))), [upcomingLaunches]);
@@ -62,11 +52,7 @@ const Upcoming = () => {
     <>
       {loading ? (<Loading />) : (
         <Container>
-          <GoBack>
-            <MdArrowBack color={colors.textInPrimary} size={20} />
-
-            <Link to="/">Voltar para Home</Link>
-          </GoBack>
+          <GoBack to="/" title="Voltar para Home" />
 
           <Content>
             {upcomingMissions}
