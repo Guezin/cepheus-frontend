@@ -40,6 +40,16 @@ export const Content = styled.main`
     flex-direction: column;
     gap: 2.1rem;
   }
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    section {
+      width: 64rem;
+    }
+  }
 `;
 
 export const Title = styled.h1`

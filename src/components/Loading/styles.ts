@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const bounceAnimation = keyframes`
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-24px);
+  }
+`;
 
 export const Container = styled.div`
     height: 100%;
@@ -9,5 +18,6 @@ export const Container = styled.div`
 
     img {
       height: 64px;
+      animation: ${bounceAnimation} 1s infinite alternate;
     }
 `;

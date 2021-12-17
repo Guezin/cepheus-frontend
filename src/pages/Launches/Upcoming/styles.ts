@@ -14,7 +14,6 @@ export const Container = styled.div`
 
 export const Content = styled.main`
   padding: 5.2rem 0 3.4rem 0;
-  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -24,6 +23,7 @@ export const Content = styled.main`
 export const Rocket = styled.section`
   height: 10.8rem;
   width: 100%;
+  padding-right: 2.4rem;
   border-radius: 5px;
   background: ${colors.shapePrimary};
 

@@ -14,27 +14,34 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   margin-top: 5.2rem;
-  width: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  div main {
-    margin-top: 1.6rem;
-    padding: 3.4rem;
-    border-radius: 5px;
-    background: ${colors.shapePrimary};
+  div {
+    width: 100%;
 
-    section h3 {
-      margin: 4rem 0 2rem 0;
-      font-size: 1.6rem;
-      color: ${colors.titleInPrimary};
+    main {
+      margin-top: 1.6rem;
+      padding: 3.4rem;
+      border-radius: 5px;
+      background: ${colors.shapePrimary};
+
+      section h3 {
+        margin: 4rem 0 2rem 0;
+        font-size: 1.6rem;
+        color: ${colors.titleInPrimary};
+      }
     }
   }
 
   div + div {
     margin-top: 5.2rem;
+  }
+
+  @media screen and (min-width: 600px) {
+    padding: 4.2rem;
   }
 `;
 
