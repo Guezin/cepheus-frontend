@@ -6,6 +6,11 @@ on:
      - main
      - develop
 
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - package.json
+
 jobs:
   Run-CI-CD:
     runs-on: ubuntu-latest
